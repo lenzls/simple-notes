@@ -1,1 +1,1 @@
-NOTE_FOLDER_PATH = "./"
+NOTE_FOLDER_PATH = "./notes"

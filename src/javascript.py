@@ -4,7 +4,7 @@ NOTE_JAVASCRIPT = """
             e.preventDefault(); 
             jQuery.ajax({
                 type: "POST",
-                url: "writeNote.py",
+                url: "writeNote",
                 data: {
                     "noteName" : $("#noteNameArea").text(), 
                     "noteText" : $("#noteTextArea").val(), 

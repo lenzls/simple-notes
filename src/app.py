@@ -1,17 +1,41 @@
 import os
 import hashlib
 
-from bottle import route, run, template
+from bottle import route, post, run, template, request
 
 import config
 from styles import NOTELIST_CSS, NOTE_CSS
 from javascript import NOTE_JAVASCRIPT
 
+@post('/writeNote')
+def writeNote():
+    notename = request.forms["noteName"]
+    notetext = request.forms["noteText"]
+    notepath = config.NOTE_FOLDER_PATH + "/" + notename
+    oldNotehash = request.forms["noteHash"]
+    try:
+        newNotehash = hashOfFile(notepath)
+    
+        if oldNotehash == newNotehash:
+            #nobody modified the note during your session
+            with open(notepath, 'w') as note:
+                note.write(str(notetext))
+        else:
+            #somebody modigied the note during your session
+            #print "!!! file was modified saved under <note>.alt !!!"
+            with open(notepath + ".alt", 'w') as note:
+                note.write(str(notetext))
+    except IOError as e:
+        with open(notepath, 'w') as note:
+            note.write(str(notetext))
+
 @route('/')
 def notelist():
+    checkForNoteFolder()
+
     notelist = "<ul>\n"
     for notefile in sorted([f for f in os.listdir(config.NOTE_FOLDER_PATH) if not f.startswith('.')]):
-    	notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
+        notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
     notelist += "</ul>\n"
 
     response = """
@@ -30,8 +54,8 @@ def notelist():
     return template(response)
 
 def checkForNoteFolder():
-	if not os.path.isdir(config.NOTE_FOLDER_PATH):
-		os.makedirs(config.NOTE_FOLDER_PATH)
+    if not os.path.isdir(config.NOTE_FOLDER_PATH):
+        os.makedirs(config.NOTE_FOLDER_PATH)
 
 
 def hashOfFile(filename):
@@ -49,12 +73,12 @@ def viewNote(notename):
     try:
         notehash = hashOfFile(notepath)
     except IOError as e:
-    	notehash = "new note"
+        notehash = "new note"
 
     noteText = ""
     if os.path.isfile(notepath):
-    	with open(notepath, 'r') as note:
-    		noteText += note.read()
+        with open(notepath, 'r') as note:
+            noteText += note.read()
 
     response = """
         <head>
@@ -64,7 +88,7 @@ def viewNote(notename):
             <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
             <script type='text/javascript'>
-            	{}
+                {}
             </script>
         </head>
         <body>
@@ -77,7 +101,7 @@ def viewNote(notename):
             </h4>
             <div id='textArea'>
                 <h2>plain note</h2>
-    	            <textarea id='noteTextArea'>{}</textarea >
+                    <textarea id='noteTextArea'>{}</textarea >
                 <button id='saveButton'>save</button>
             </div>
             <div id='markdownArea'>
