@@ -1,1 +1,0 @@
-pipenv run gunicorn --workers=2 app:start --bind 0.0.0.0:63636

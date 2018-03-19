@@ -1,0 +1,1 @@
+NOTE_FOLDER_PATH = "./"
