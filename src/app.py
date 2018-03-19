@@ -3,15 +3,16 @@ import hashlib
 
 from bottle import route, post, run, template, request
 
-import config
 from styles import NOTELIST_CSS, NOTE_CSS
 from javascript import NOTE_JAVASCRIPT
+
+NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
 @post('/writeNote')
 def writeNote():
     notename = request.forms["noteName"]
     notetext = request.forms["noteText"]
-    notepath = config.NOTE_FOLDER_PATH + "/" + notename
+    notepath = NOTE_FOLDER_PATH + "/" + notename
     oldNotehash = request.forms["noteHash"]
     try:
         newNotehash = hashOfFile(notepath)
@@ -34,7 +35,7 @@ def notelist():
     checkForNoteFolder()
 
     notelist = "<ul>\n"
-    for notefile in sorted([f for f in os.listdir(config.NOTE_FOLDER_PATH) if not f.startswith('.')]):
+    for notefile in sorted([f for f in os.listdir(NOTE_FOLDER_PATH) if not f.startswith('.')]):
         notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
     notelist += "</ul>\n"
 
@@ -54,8 +55,8 @@ def notelist():
     return template(response)
 
 def checkForNoteFolder():
-    if not os.path.isdir(config.NOTE_FOLDER_PATH):
-        os.makedirs(config.NOTE_FOLDER_PATH)
+    if not os.path.isdir(NOTE_FOLDER_PATH):
+        os.makedirs(NOTE_FOLDER_PATH)
 
 
 def hashOfFile(filename):
@@ -69,7 +70,7 @@ def hashOfFile(filename):
 def viewNote(notename):
     checkForNoteFolder()
 
-    notepath = config.NOTE_FOLDER_PATH + "/" + notename
+    notepath = NOTE_FOLDER_PATH + "/" + notename
     try:
         notehash = hashOfFile(notepath)
     except IOError as e:
