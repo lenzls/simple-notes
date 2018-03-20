@@ -31,6 +31,7 @@ def writeNote():
             note.write(str(notetext))
 
 @route('/')
+@route('/list')
 def notelist():
     checkForNoteFolder()
 
@@ -86,7 +87,10 @@ def viewNote(notename):
             <style>
                 {}
             </style>
-            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+            <script
+			  src="https://code.jquery.com/jquery-2.2.4.min.js"
+			  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+			  crossorigin="anonymous"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
             <script type='text/javascript'>
                 {}
