@@ -16,7 +16,7 @@ def writeNote():
     oldNotehash = request.forms["noteHash"]
     try:
         newNotehash = hashOfFile(notepath)
-    
+
         if oldNotehash == newNotehash:
             #nobody modified the note during your session
             with open(notepath, 'w') as note:
@@ -67,7 +67,7 @@ def hashOfFile(filename):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-@route('/<notename>') 
+@route('/<notename>')
 def viewNote(notename):
     checkForNoteFolder()
 
@@ -99,6 +99,7 @@ def viewNote(notename):
         <body>
             <div>
                 <h1>notename:  <span id='noteNameArea'>{}</span></h1>
+                <a href="/list">to list</a>
                 <b>notehash:</b> <span id='noteHashArea'>{}</span>
             </div>
             <h4>
