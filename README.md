@@ -1,3 +1,6 @@
+#.env
+NOTE_FOLDER_PATH=./notes                                      
+
 #supervisord script
 [program:simple-notes]
 command=/home/zorilla/.local/bin/pipenv run python3 src/app.py
