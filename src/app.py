@@ -99,11 +99,10 @@ def viewNote(notename):
         <body>
             <div>
                 <h1>notename:  <span id='noteNameArea'>{}</span></h1>
-                <a href="/list">to list</a>
                 <b>notehash:</b> <span id='noteHashArea'>{}</span>
             </div>
             <h4>
-                <a href='/'>to note list</a>
+                <a href='/list'>to note list</a>
             </h4>
             <div id='textArea'>
                 <h2>plain note</h2>
