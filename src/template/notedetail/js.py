@@ -1,11 +1,14 @@
 NOTEDETAIL_JAVASCRIPT = """
-    $(document).ready(function(){
-        var el = document.getElementById("saveButton");
+    function addClickHandler(id, fnc) {
+        var el = document.getElementById(id);
         if (el.addEventListener) {
-            el.addEventListener("click", writeNote, false);
+            el.addEventListener("click", fnc, false);
         } else {
-            el.attachEvent('onclick', writeNote);
+            el.attachEvent('onclick', fnc);
         }
+    }
+    $(document).ready(function() {
+        addClickHandler("saveButton", writeNote)
         function writeNote() {
             fetch('/writeNote', {
                 method: 'POST',
@@ -23,6 +26,7 @@ NOTEDETAIL_JAVASCRIPT = """
             .then(resp => {
                 console.log(resp)
                 window.location = "/" + resp.createdNote;
+                location.reload()
             });
             var converter = new showdown.Converter();
             var markdownText = converter.makeHtml($("#noteTextArea").val());
