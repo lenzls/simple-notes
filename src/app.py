@@ -1,7 +1,7 @@
 import os
 import hashlib
 
-from bottle import route, post, run, template, request
+from bottle import route, post, run, request
 
 from template.notelist.html import NOTELIST_HTML
 from template.notelist.css import NOTELIST_CSS
@@ -56,7 +56,7 @@ def notelist():
     notelist += "</ul>\n"
 
     response = NOTELIST_HTML.format(NOTELIST_CSS, notelist)
-    return template(response)
+    return response
 
 
 def getListOfNotePaths():
@@ -88,6 +88,6 @@ def viewNote(notename):
             noteText += note.read()
 
     response = NOTEDETAIL_HTML.format(NOTEDETAIL_CSS, NOTEDETAIL_JAVASCRIPT, notename, notehash, noteText)
-    return template(response)
+    return response
 
 run(server='gunicorn', host='localhost', port=63636)
