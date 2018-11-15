@@ -1,4 +1,4 @@
-NOTE_JAVASCRIPT = """
+NOTEDETAIL_JAVASCRIPT = """
     $(document).ready(function(){
         $("#saveButton").click(function(e){
             e.preventDefault();
