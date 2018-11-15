@@ -11,6 +11,17 @@ from template.notedetail.js import NOTEDETAIL_JAVASCRIPT
 
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
+def createDirsIfNecessary(dirpath):
+    if not os.path.isdir(dirpath):
+        os.makedirs(dirpath)
+
+def hashOfFile(filename):
+    hash_md5 = hashlib.md5()
+    with open(filename, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
 @post('/writeNote')
 def writeNote():
     notename = request.forms["noteName"]
@@ -35,19 +46,6 @@ def writeNote():
         with open(notepath, 'w') as note:
             note.write(str(notetext))
 
-def getListOfNotePaths():
-    listOfFiles = []
-    for (dirpath, dirnames, filenames) in os.walk(NOTE_FOLDER_PATH):
-        dirPathWithoutNotesFolder = dirpath[len(NOTE_FOLDER_PATH) + 1:]
-        if dirPathWithoutNotesFolder.startswith('.'):
-            continue
-        for filename in filenames:
-            if filename.startswith('.'):
-                continue
-            path = os.path.join(dirPathWithoutNotesFolder, filename)
-            listOfFiles.append(path)
-    return listOfFiles
-
 @route('/')
 @route('/list')
 def notelist():
@@ -61,16 +59,19 @@ def notelist():
     response = NOTELIST_HTML.format(NOTELIST_CSS, notelist)
     return template(response)
 
-def createDirsIfNecessary(dirpath):
-    if not os.path.isdir(dirpath):
-        os.makedirs(dirpath)
 
-def hashOfFile(filename):
-    hash_md5 = hashlib.md5()
-    with open(filename, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+def getListOfNotePaths():
+    listOfFiles = []
+    for (dirpath, dirnames, filenames) in os.walk(NOTE_FOLDER_PATH):
+        dirPathWithoutNotesFolder = dirpath[len(NOTE_FOLDER_PATH) + 1:]
+        if dirPathWithoutNotesFolder.startswith('.'):
+            continue
+        for filename in filenames:
+            if filename.startswith('.'):
+                continue
+            path = os.path.join(dirPathWithoutNotesFolder, filename)
+            listOfFiles.append(path)
+    return listOfFiles
 
 @route('/<notename:path>')
 def viewNote(notename):
