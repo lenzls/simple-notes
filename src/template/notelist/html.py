@@ -1,9 +1,7 @@
 NOTELIST_HTML = """
 <html>
     <head>
-        <style>
-            {}
-        </style>
+        <link rel='stylesheet' type='text/css' href='/static/notes.css'>
     </head>
     <body>
         <h1>Notelist:</h1>

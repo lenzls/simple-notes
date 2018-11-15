@@ -4,9 +4,7 @@ import hashlib
 from bottle import route, post, run, request, static_file
 
 from template.notelist.html import NOTELIST_HTML
-from template.notelist.css import NOTELIST_CSS
 from template.notedetail.html import NOTEDETAIL_HTML
-from template.notedetail.css import NOTEDETAIL_CSS
 from template.notedetail.js import NOTEDETAIL_JAVASCRIPT
 
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
@@ -61,7 +59,7 @@ def notelist():
         notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
     notelist += "</ul>\n"
 
-    response = NOTELIST_HTML.format(NOTELIST_CSS, notelist)
+    response = NOTELIST_HTML.format(notelist)
     return response
 
 
@@ -93,7 +91,7 @@ def viewNote(notename):
         with open(notepath, 'r') as note:
             noteText += note.read()
 
-    response = NOTEDETAIL_HTML.format(NOTEDETAIL_CSS, NOTEDETAIL_JAVASCRIPT, notename, notehash, noteText)
+    response = NOTEDETAIL_HTML.format(NOTEDETAIL_JAVASCRIPT, notename, notehash, noteText)
     return response
 
 run(server='gunicorn', host='localhost', port=63636)

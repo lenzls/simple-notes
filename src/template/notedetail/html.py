@@ -1,9 +1,7 @@
 NOTEDETAIL_HTML = """
 <html>
     <head>
-        <style>
-            {}
-        </style>
+        <link rel='stylesheet' type='text/css' href='/static/notes.css'>
         <script src="/static/showdown.min.js"></script>
         <script type='text/javascript'>
             {}
