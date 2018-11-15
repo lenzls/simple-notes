@@ -1,6 +1,13 @@
 NOTEDETAIL_JAVASCRIPT = """
     $(document).ready(function(){
-        $("#saveButton").click(function(e){
+        var el = document.getElementById("saveButton");
+        if (el.addEventListener) {
+            el.addEventListener("click", writeNote, false);
+        } else {
+            el.attachEvent('onclick', writeNote);
+        }
+
+        function writeNote(e){
             e.preventDefault();
             jQuery.ajax({
                 type: "POST",
@@ -14,7 +21,7 @@ NOTEDETAIL_JAVASCRIPT = """
                     window.location = "/" + msg.createdNote;
                 }
             });
-        });
+        };
         var converter = new showdown.Converter();
         var markdownText = converter.makeHtml($("#noteTextArea").val());
             $("#markdownTextArea").html(markdownText);
