@@ -8,7 +8,7 @@ NOTEDETAIL_JAVASCRIPT = """
         }
     }
 
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         addClickHandler("saveButton", writeNote)
         function writeNote() {
             fetch('/writeNote', {
@@ -32,7 +32,7 @@ NOTEDETAIL_JAVASCRIPT = """
         }
 
         var converter = new showdown.Converter();
-        var markdownText = converter.makeHtml($("#noteTextArea").val());
-        $("#markdownTextArea").html(markdownText);
+        var markdownText = converter.makeHtml(document.getElementById("noteTextArea").value);
+        document.getElementById("markdownTextArea").innerHTML = markdownText;
     });
 """
