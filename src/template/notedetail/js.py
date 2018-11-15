@@ -7,6 +7,7 @@ NOTEDETAIL_JAVASCRIPT = """
             el.attachEvent('onclick', fnc);
         }
     }
+
     $(document).ready(function() {
         addClickHandler("saveButton", writeNote)
         function writeNote() {
@@ -17,9 +18,9 @@ NOTEDETAIL_JAVASCRIPT = """
                 },
                 body:
                     JSON.stringify({
-                        "noteName" : $("#noteNameArea").text(),
-                        "noteText" : $("#noteTextArea").val(),
-                        "noteHash" : $("#noteHashArea").text()
+                        "noteName" : document.getElementById("noteNameArea").textContent,
+                        "noteText" : document.getElementById("noteTextArea").value,
+                        "noteHash" : document.getElementById("noteHashArea").textContent
                     })
             })
             .then(response => response.blob())
@@ -28,9 +29,10 @@ NOTEDETAIL_JAVASCRIPT = """
                 window.location = "/" + resp.createdNote;
                 location.reload()
             });
-            var converter = new showdown.Converter();
-            var markdownText = converter.makeHtml($("#noteTextArea").val());
-            $("#markdownTextArea").html(markdownText);
         }
+
+        var converter = new showdown.Converter();
+        var markdownText = converter.makeHtml($("#noteTextArea").val());
+        $("#markdownTextArea").html(markdownText);
     });
 """
