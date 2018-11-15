@@ -30,9 +30,9 @@ def server_static(filepath):
 
 @post('/writeNote')
 def writeNote():
-    notename = request.forms["noteName"]
-    notetext = request.forms["noteText"]
-    rememberedNotehash = request.forms["noteHash"]
+    notename = request.json["noteName"]
+    notetext = request.json["noteText"]
+    rememberedNotehash = request.json["noteHash"]
     notepath = NOTE_FOLDER_PATH + "/" + notename
     notedir = "/".join(notepath.split("/")[0:-1])
     createDirsIfNecessary(notedir)

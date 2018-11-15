@@ -6,24 +6,27 @@ NOTEDETAIL_JAVASCRIPT = """
         } else {
             el.attachEvent('onclick', writeNote);
         }
-
-        function writeNote(e){
-            e.preventDefault();
-            jQuery.ajax({
-                type: "POST",
-                url: "/writeNote",
-                data: {
-                    "noteName" : $("#noteNameArea").text(),
-                    "noteText" : $("#noteTextArea").val(),
-                    "noteHash" : $("#noteHashArea").text()
+        function writeNote() {
+            fetch('/writeNote', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
                 },
-                success: function (msg) {
-                    window.location = "/" + msg.createdNote;
-                }
+                body:
+                    JSON.stringify({
+                        "noteName" : $("#noteNameArea").text(),
+                        "noteText" : $("#noteTextArea").val(),
+                        "noteHash" : $("#noteHashArea").text()
+                    })
+            })
+            .then(response => response.blob())
+            .then(resp => {
+                console.log(resp)
+                window.location = "/" + resp.createdNote;
             });
-        };
-        var converter = new showdown.Converter();
-        var markdownText = converter.makeHtml($("#noteTextArea").val());
+            var converter = new showdown.Converter();
+            var markdownText = converter.makeHtml($("#noteTextArea").val());
             $("#markdownTextArea").html(markdownText);
-        });
+        }
+    });
 """
