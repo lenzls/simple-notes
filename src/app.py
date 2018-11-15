@@ -26,25 +26,24 @@ def hashOfFile(filename):
 def writeNote():
     notename = request.forms["noteName"]
     notetext = request.forms["noteText"]
+    rememberedNotehash = request.forms["noteHash"]
     notepath = NOTE_FOLDER_PATH + "/" + notename
     notedir = "/".join(notepath.split("/")[0:-1])
     createDirsIfNecessary(notedir)
-    oldNotehash = request.forms["noteHash"]
-    try:
-        newNotehash = hashOfFile(notepath)
 
-        if oldNotehash == newNotehash:
-            #nobody modified the note during your session
-            with open(notepath, 'w') as note:
-                note.write(str(notetext))
-        else:
-            #somebody modigied the note during your session
-            #print "!!! file was modified saved under <note>.alt !!!"
-            with open(notepath + ".alt", 'w') as note:
-                note.write(str(notetext))
-    except IOError as e:
+    if os.path.exists(notepath):
+        currentNoteHash = hashOfFile(notepath)
+        if rememberedNotehash != currentNoteHash:
+            notename += ".alt"
+            notepath += ".alt"
+    try:
         with open(notepath, 'w') as note:
             note.write(str(notetext))
+    except IOError as e:
+        return HTTPResponse(status=500, body="IO Error during note creation")
+    return {
+        "createdNote": notename
+    }
 
 @route('/')
 @route('/list')

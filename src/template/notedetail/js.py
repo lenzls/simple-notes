@@ -11,7 +11,7 @@ NOTEDETAIL_JAVASCRIPT = """
                     "noteHash" : $("#noteHashArea").text()
                 },
                 success: function (msg) {
-                    location.reload();
+                    window.location = "/" + msg.createdNote;
                 }
             });
         });
