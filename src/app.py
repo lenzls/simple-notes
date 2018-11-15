@@ -13,6 +13,8 @@ def writeNote():
     notename = request.forms["noteName"]
     notetext = request.forms["noteText"]
     notepath = NOTE_FOLDER_PATH + "/" + notename
+    notedir = "/".join(notepath.split("/")[0:-1])
+    createDirsIfNecessary(notedir)
     oldNotehash = request.forms["noteHash"]
     try:
         newNotehash = hashOfFile(notepath)
@@ -56,9 +58,11 @@ def notelist():
     return template(response)
 
 def checkForNoteFolder():
-    if not os.path.isdir(NOTE_FOLDER_PATH):
-        os.makedirs(NOTE_FOLDER_PATH)
+    createDirsIfNecessary(NOTE_FOLDER_PATH)
 
+def createDirsIfNecessary(dirpath):
+    if not os.path.isdir(dirpath):
+        os.makedirs(dirpath)
 
 def hashOfFile(filename):
     hash_md5 = hashlib.md5()
@@ -67,7 +71,7 @@ def hashOfFile(filename):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-@route('/<notename>')
+@route('/<notename:path>')
 def viewNote(notename):
     checkForNoteFolder()
 

@@ -1,13 +1,13 @@
 NOTE_JAVASCRIPT = """
     $(document).ready(function(){
         $("#saveButton").click(function(e){
-            e.preventDefault(); 
+            e.preventDefault();
             jQuery.ajax({
                 type: "POST",
-                url: "writeNote",
+                url: "/writeNote",
                 data: {
-                    "noteName" : $("#noteNameArea").text(), 
-                    "noteText" : $("#noteTextArea").val(), 
+                    "noteName" : $("#noteNameArea").text(),
+                    "noteText" : $("#noteTextArea").val(),
                     "noteHash" : $("#noteHashArea").text()
                 },
                 success: function (msg) {
