@@ -48,7 +48,7 @@ def getListOfNotePaths():
 @route('/')
 @route('/list')
 def notelist():
-    checkForNoteFolder()
+    createDirsIfNecessary(NOTE_FOLDER_PATH)
 
     notelist = "<ul>\n"
     for notefile in sorted(getListOfNotePaths()):
@@ -70,9 +70,6 @@ def notelist():
     """.format(NOTELIST_CSS, notelist)
     return template(response)
 
-def checkForNoteFolder():
-    createDirsIfNecessary(NOTE_FOLDER_PATH)
-
 def createDirsIfNecessary(dirpath):
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)
@@ -86,7 +83,7 @@ def hashOfFile(filename):
 
 @route('/<notename:path>')
 def viewNote(notename):
-    checkForNoteFolder()
+    createDirsIfNecessary(NOTE_FOLDER_PATH)
 
     notepath = NOTE_FOLDER_PATH + "/" + notename
     try:
