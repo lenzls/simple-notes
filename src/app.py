@@ -1,7 +1,7 @@
 import os
 import hashlib
 
-from bottle import route, post, run, request
+from bottle import route, post, run, request, static_file
 
 from template.notelist.html import NOTELIST_HTML
 from template.notelist.css import NOTELIST_CSS
@@ -21,6 +21,12 @@ def hashOfFile(filename):
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
+currentModulePath = os.path.dirname(os.path.realpath(__file__))
+
+@route('/static/<filepath:path>')
+def server_static(filepath):
+    return static_file(filepath, root=os.path.join(currentModulePath, "static"))
 
 @post('/writeNote')
 def writeNote():

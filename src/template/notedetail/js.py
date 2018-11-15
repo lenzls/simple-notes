@@ -15,7 +15,7 @@ NOTEDETAIL_JAVASCRIPT = """
                 }
             });
         });
-        var converter = new Showdown.converter();
+        var converter = new showdown.Converter();
         var markdownText = converter.makeHtml($("#noteTextArea").val());
             $("#markdownTextArea").html(markdownText);
         });
