@@ -35,7 +35,14 @@ def writeNote():
 def getListOfNotePaths():
     listOfFiles = []
     for (dirpath, dirnames, filenames) in os.walk(NOTE_FOLDER_PATH):
-        listOfFiles += [os.path.join(dirpath, file)[len(NOTE_FOLDER_PATH) + 1:] for file in filenames]
+        dirPathWithoutNotesFolder = dirpath[len(NOTE_FOLDER_PATH) + 1:]
+        if dirPathWithoutNotesFolder.startswith('.'):
+            continue
+        for filename in filenames:
+            if filename.startswith('.'):
+                continue
+            path = os.path.join(dirPathWithoutNotesFolder, filename)
+            listOfFiles.append(path)
     return listOfFiles
 
 @route('/')
@@ -44,7 +51,7 @@ def notelist():
     checkForNoteFolder()
 
     notelist = "<ul>\n"
-    for notefile in sorted([f for f in getListOfNotePaths() if not f.startswith('.')]):
+    for notefile in sorted(getListOfNotePaths()):
         notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
     notelist += "</ul>\n"
 
