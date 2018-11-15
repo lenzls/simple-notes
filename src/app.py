@@ -132,8 +132,4 @@ def viewNote(notename):
     """.format(NOTE_CSS, NOTE_JAVASCRIPT, notename, notehash, noteText)
     return template(response)
 
-@route('/hello/<name>')
-def index(name):
-    return template('<b>Hello {{name}}</b>!', name=name)
-
 run(server='gunicorn', host='localhost', port=63636)
