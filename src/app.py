@@ -5,7 +5,6 @@ from bottle import route, post, run, request, static_file
 
 from template.notelist.html import NOTELIST_HTML
 from template.notedetail.html import NOTEDETAIL_HTML
-from template.notedetail.js import NOTEDETAIL_JAVASCRIPT
 
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
@@ -91,7 +90,7 @@ def viewNote(notename):
         with open(notepath, 'r') as note:
             noteText += note.read()
 
-    response = NOTEDETAIL_HTML.format(NOTEDETAIL_JAVASCRIPT, notename, notehash, noteText)
+    response = NOTEDETAIL_HTML.format(notename, notehash, noteText)
     return response
 
 run(server='gunicorn', host='localhost', port=63636)
