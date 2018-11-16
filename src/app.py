@@ -3,18 +3,9 @@ import hashlib
 
 from bottle import route, post, run, request, static_file, template, TEMPLATE_PATH
 
+from util import createDirsIfNecessary, hashOfFile
+
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
-
-def createDirsIfNecessary(dirpath):
-    if not os.path.isdir(dirpath):
-        os.makedirs(dirpath)
-
-def hashOfFile(filename):
-    hash_md5 = hashlib.md5()
-    with open(filename, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
 
 currentModulePath = os.path.dirname(os.path.realpath(__file__))
 
