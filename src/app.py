@@ -4,15 +4,16 @@ from bottle import route, post, run, request, static_file, template, TEMPLATE_PA
 
 from utils import createDirsIfNecessary, hashOfFile
 
+currentModulePath = os.path.dirname(os.path.realpath(__file__))
+
 NOTE_FOLDER_PATH = os.getenv("NOTE_FOLDER_PATH", "./default_notes_location")
 NOTE_OVERWRITE_PROTECTION_SUFFIX = ".alt"
-TEMPLATE_DIRECTORY = "./src/templates/"
-
-currentModulePath = os.path.dirname(os.path.realpath(__file__))
+TEMPLATE_DIRECTORY = os.path.join(currentModulePath, "templates")
+STATIC_FILES_DIRECTORY = os.path.join(currentModulePath, "static")
 
 @route("/static/<filepath:path>")
 def server_static(filepath):
-    return static_file(filepath, root=os.path.join(currentModulePath, "static"))
+    return static_file(filepath, root=STATIC_FILES_DIRECTORY)
 
 @post("/writeNote")
 def writeNote():
