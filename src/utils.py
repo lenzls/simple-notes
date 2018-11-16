@@ -1,3 +1,6 @@
+import os
+import hashlib
+
 def createDirsIfNecessary(dirpath):
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)
