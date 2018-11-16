@@ -1,8 +1,7 @@
 import os
 import hashlib
 
-import bottle
-from bottle import route, post, run, request, static_file, template
+from bottle import route, post, run, request, static_file, template, TEMPLATE_PATH
 
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
@@ -82,5 +81,5 @@ def viewNote(notename):
 
     return template('note-detail', notename=notename, notehash=notehash, notetext=noteText)
 
-bottle.TEMPLATE_PATH.insert(0,'./src/templates/')
+TEMPLATE_PATH.insert(0,'./src/templates/')
 run(server='gunicorn', host='localhost', port=63636)
