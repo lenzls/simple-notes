@@ -4,8 +4,6 @@ import hashlib
 import bottle
 from bottle import route, post, run, request, static_file, template
 
-from template.notelist.html import NOTELIST_HTML
-
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
 def createDirsIfNecessary(dirpath):
@@ -52,15 +50,7 @@ def writeNote():
 @route('/list')
 def notelist():
     createDirsIfNecessary(NOTE_FOLDER_PATH)
-
-    notelist = "<ul>\n"
-    for notefile in sorted(getListOfNotePaths()):
-        notelist += "<li><a href='{0}'>{0}</a></li>\n".format(notefile)
-    notelist += "</ul>\n"
-
-    response = NOTELIST_HTML.format(notelist)
-    return response
-
+    return template('note-list', notelist=sorted(getListOfNotePaths()))
 
 def getListOfNotePaths():
     listOfFiles = []
@@ -90,7 +80,7 @@ def viewNote(notename):
         with open(notepath, 'r') as note:
             noteText += note.read()
 
-    return template('note_detail', notename=notename, notehash=notehash, notetext=noteText)
+    return template('note-detail', notename=notename, notehash=notehash, notetext=noteText)
 
 bottle.TEMPLATE_PATH.insert(0,'./src/templates/')
 run(server='gunicorn', host='localhost', port=63636)
