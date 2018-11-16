@@ -1,10 +1,10 @@
 import os
 import hashlib
 
-from bottle import route, post, run, request, static_file
+import bottle
+from bottle import route, post, run, request, static_file, template
 
 from template.notelist.html import NOTELIST_HTML
-from template.notedetail.html import NOTEDETAIL_HTML
 
 NOTE_FOLDER_PATH = os.getenv('NOTE_FOLDER_PATH', './default_notes_location')
 
@@ -90,7 +90,7 @@ def viewNote(notename):
         with open(notepath, 'r') as note:
             noteText += note.read()
 
-    response = NOTEDETAIL_HTML.format(notename, notehash, noteText)
-    return response
+    return template('note_detail', notename=notename, notehash=notehash, notetext=noteText)
 
+bottle.TEMPLATE_PATH.insert(0,'./src/templates/')
 run(server='gunicorn', host='localhost', port=63636)
