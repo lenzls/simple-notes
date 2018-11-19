@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="robots" content="noindex" />
         <link rel='stylesheet' type='text/css' href='/static/notes.css'>
         <script src="/static/showdown.min.js"></script>
         <script src="/static/note-detail.js"></script>
