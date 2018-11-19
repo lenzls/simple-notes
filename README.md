@@ -10,6 +10,7 @@ Uses the filesystem as a datastore.
 * Markdown view
 * filesystem as a datastore
 * hierarchical notes via subdirectories
+* notes restarting with a . are hidden from the notelist
 
 ## Installation
 
@@ -24,6 +25,7 @@ Uses the filesystem as a datastore.
 2. go to `http://localhost:63636/` to view the list of Notes
 3. go to `http://localhost:63636/subdir/noteName` to create/edit the note `noteName` in subdirectory `subdir`
 
+_Note_: notes starting with a dot are hidden in the notelist and can only accessed with the direct link
 
 
 ### Run via supervisord
