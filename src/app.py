@@ -6,7 +6,9 @@ from utils import createDirsIfNecessary, hashOfFile
 
 currentModulePath = os.path.dirname(os.path.realpath(__file__))
 
+NOTE_PORT = os.getenv("NOTE_PORT", 63636)
 NOTE_FOLDER_PATH = os.getenv("NOTE_FOLDER_PATH", "./default_notes_location")
+
 NOTE_OVERWRITE_PROTECTION_SUFFIX = ".alt"
 TEMPLATE_DIRECTORY = os.path.join(currentModulePath, "templates")
 STATIC_FILES_DIRECTORY = os.path.join(currentModulePath, "static")
@@ -75,4 +77,4 @@ def viewNote(notename):
     return template("note-detail", notename=notename, notehash=notehash, notetext=noteText)
 
 TEMPLATE_PATH.insert(0, TEMPLATE_DIRECTORY)
-run(server="gunicorn", host="localhost", port=63636)
+run(server="gunicorn", host="localhost", port=NOTE_PORT)
