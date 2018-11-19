@@ -6,8 +6,8 @@ from utils import createDirsIfNecessary, hashOfFile
 
 currentModulePath = os.path.dirname(os.path.realpath(__file__))
 
-NOTE_PORT = os.getenv("NOTE_PORT", 63636)
-NOTE_FOLDER_PATH = os.getenv("NOTE_FOLDER_PATH", "./default_notes_location")
+NOTE_PORT = os.getenv("SIMPE_NOTES_PORT", 63636)
+NOTE_FOLDER_PATH = os.getenv("SIMPE_NOTES_NOTE_FOLDER_PATH", "./default_notes_location")
 
 NOTE_OVERWRITE_PROTECTION_SUFFIX = ".alt"
 TEMPLATE_DIRECTORY = os.path.join(currentModulePath, "templates")
