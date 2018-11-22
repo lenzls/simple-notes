@@ -1,4 +1,5 @@
 import os
+import time
 
 from bottle import route, post, run, request, static_file, template, TEMPLATE_PATH
 
@@ -69,12 +70,14 @@ def viewNote(notename):
     except IOError as e:
         notehash = "new note"
 
+    noteLastModificationDate = time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(os.path.getmtime(notepath)))
+
     noteText = ""
     if os.path.isfile(notepath):
         with open(notepath, "r") as note:
             noteText += note.read()
 
-    return template("note-detail", notename=notename, notehash=notehash, notetext=noteText)
+    return template("note-detail", notename=notename, notehash=notehash, noteLastModificationDate=noteLastModificationDate, notetext=noteText)
 
 TEMPLATE_PATH.insert(0, TEMPLATE_DIRECTORY)
 run(server="gunicorn", host="localhost", port=NOTE_PORT)

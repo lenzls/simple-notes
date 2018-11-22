@@ -8,7 +8,8 @@
     <body>
         <div>
             <h1>notename:  <span id='noteNameArea'>{{notename}}</span></h1>
-            <b>notehash:</b> <span id='noteHashArea'>{{notehash}}</span>
+            <b>notehash:</b> <span id='noteHashArea'>{{notehash}}</span><br />
+            <b>last modified on:</b> <span id='noteLastModificationDateArea'>{{noteLastModificationDate}}</span>
         </div>
         <h4>
             <a href='/list'>to note list</a>
