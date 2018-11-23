@@ -30,7 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    var converter = new showdown.Converter();
+    var converter = new showdown.Converter({
+        "parseImgDimensions": true,
+        "tables": true,
+        "tasklists": true
+    });
     var markdownText = converter.makeHtml(document.getElementById("noteTextArea").value);
     document.getElementById("markdownTextArea").innerHTML = markdownText;
 });
