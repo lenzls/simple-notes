@@ -3,6 +3,9 @@ A tiny application for quick note taking without permissions or other fancy stuf
 
 Uses the filesystem as a datastore.
 
+
+![Screenshot](https://raw.githubusercontent.com/lenzls/simple-notes/master/docs/screenshot.png)
+
 ## Features
 
 * quick notetaking
