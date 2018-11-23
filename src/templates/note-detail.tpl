@@ -6,14 +6,15 @@
         <script src="/static/note-detail.js"></script>
     </head>
     <body>
+        <div id='noteListDiv'>
+            <a href='/list'>to note list</a>
+        </div>
+        <h1>notename:  <span id='noteNameArea'>{{notename}}</span></h1>
         <div>
-            <h1>notename:  <span id='noteNameArea'>{{notename}}</span></h1>
             <b>notehash:</b> <span id='noteHashArea'>{{notehash}}</span><br />
             <b>last modified on:</b> <span id='noteLastModificationDateArea'>{{noteLastModificationDate}}</span>
+
         </div>
-        <h4>
-            <a href='/list'>to note list</a>
-        </h4>
         <div id='textArea'>
             <h2>plain note</h2>
                 <textarea id='noteTextArea'>{{notetext}}</textarea >
