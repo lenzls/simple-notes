@@ -70,10 +70,11 @@ def viewNote(notename):
     except IOError as e:
         notehash = "new note"
 
-    noteLastModificationDate = time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(os.path.getmtime(notepath)))
 
     noteText = ""
+    noteLastModificationDate = "new note"
     if os.path.isfile(notepath):
+        noteLastModificationDate = time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(os.path.getmtime(notepath)))
         with open(notepath, "r") as note:
             noteText += note.read()
 
