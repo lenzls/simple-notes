@@ -81,4 +81,4 @@ def viewNote(notename):
     return template("note-detail", notename=notename, notehash=notehash, noteLastModificationDate=noteLastModificationDate, notetext=noteText)
 
 TEMPLATE_PATH.insert(0, TEMPLATE_DIRECTORY)
-run(server="gunicorn", host="localhost", port=NOTE_PORT)
+run(server="gunicorn", host="0.0.0.0", port=NOTE_PORT)
