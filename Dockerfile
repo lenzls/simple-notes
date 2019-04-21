@@ -7,8 +7,8 @@ WORKDIR /opt/simple-notes
 
 COPY Pipfile.lock Pipfile ./
 RUN pip install pipenv
-RUN pipenv install --system --deploy --ignore-pipfile
+RUN pipenv install --deploy --ignore-pipfile
 
 COPY src ./src
 COPY .env ./
-CMD python src/app.py
+CMD pipenv run python src/app.py
