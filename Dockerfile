@@ -9,5 +9,6 @@ COPY Pipfile.lock Pipfile ./
 RUN pip install pipenv
 RUN pipenv install --system --deploy --ignore-pipfile
 
-COPY . ./
+COPY src ./src
+COPY .env ./
 CMD python src/app.py
